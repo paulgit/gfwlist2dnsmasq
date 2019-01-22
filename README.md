@@ -33,6 +33,8 @@ Valid options are:
     -u, --url   <url>
                 GFW List URL
                 (Default: https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt)
+    -n, --notime
+                Do not write date/time in output file
     -h, --help  Usage
 ```
 
