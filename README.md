@@ -30,6 +30,9 @@ Valid options are:
                 Include extra domains to the result from a domain list text file
                 This file will be processed after the exclude-domain-file
                 Please put one domain per line
+    -u, --url   <url>
+                GFW List URL
+                (Default: https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt)
     -h, --help  Usage
 ```
 
@@ -61,13 +64,3 @@ opkg install ca-certificates ca-bundle
 ```
 
 If you really want to bypass the certificate validation, use '-i' or '--insecure' option. You should know this is insecure.
-
-### Generated Configuration Files [![Build Status](https://travis-ci.org/cokebar/gfwlist2dnsmasq.svg?branch=master)](https://travis-ci.org/cokebar/gfwlist2dnsmasq)
-
-If you don't want to generate dnsmasq configuration file by yourself, you can directly download them:
-
-- gfwlist to dnsmasq rule file without ipset: https://cokebar.github.io/gfwlist2dnsmasq/dnsmasq_gfwlist.conf
-
-- gfwlist to dnsmasq rule file with ipset: https://cokebar.github.io/gfwlist2dnsmasq/dnsmasq_gfwlist_ipset.conf
-
-- gfwlist to domain list file: https://cokebar.github.io/gfwlist2dnsmasq/gfwlist_domain.txt

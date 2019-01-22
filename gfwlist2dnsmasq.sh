@@ -29,9 +29,9 @@ usage() {
 
 Name:        gfwlist2dnsmasq.sh
 Desription:  A shell script which convert gfwlist into dnsmasq rules.
-Version:     0.8.0 (2017.12.25)
-Author:      Cokebar Chi
-Website:     https://github.com/cokebar
+Version:     0.8.1 (2019.01.22)
+Author:      Cokebar Chi / Paul Git
+Website:     https://github.com/cokebar / https://code.paulg.it/paulgit
 
 Usage: sh gfwlist2dnsmasq.sh [options] -o FILE
 Valid options are:
@@ -56,6 +56,8 @@ Valid options are:
                 Include extra domains to the result from a domain list text file
                 This file will be processed after the exclude-domain-file
                 Please put one domain per line
+    -u, --url   <url>
+                GFW List URL (Default: https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt)
     -h, --help
                 Usage
 EOF
@@ -100,6 +102,7 @@ check_depends(){
 }
 
 get_args(){
+    BASE_URL='https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt'
     OUT_TYPE='DNSMASQ_RULES'
     DNS_IP='127.0.0.1'
     DNS_PORT='5353'
@@ -117,6 +120,10 @@ get_args(){
         case "${1}" in
             --help | -h)
                 usage 0
+                ;;
+            --url | -u)
+                BASE_URL="$2"
+                shift
                 ;;
             --domain-list | -l)
                 OUT_TYPE='DOMAIN_LIST'
@@ -215,7 +222,6 @@ get_args(){
 
 process(){
     # Set Global Var
-    BASE_URL='https://github.com/gfwlist/gfwlist/raw/master/gfwlist.txt'
     TMP_DIR=`mktemp -d /tmp/gfwlist2dnsmasq.XXXXXX`
     BASE64_FILE="$TMP_DIR/base64.txt"
     GFWLIST_FILE="$TMP_DIR/gfwlist.txt"
@@ -225,7 +231,7 @@ process(){
     OUT_TMP_FILE="$TMP_DIR/gfwlist.out.tmp"
 
     # Fetch GfwList and decode it into plain text
-    printf 'Fetching GfwList... '
+    printf "Fetching GfwList from $BASE_URL... "
     if [ -z $USE_WGET ]; then
         curl -s -L $CURL_EXTARG -o$BASE64_FILE $BASE_URL
     else
